@@ -1,0 +1,251 @@
+:root {
+  --bg: #f4efe6;
+  --board: #e2c58f;
+  --line: #8a6a3a;
+  --text: #2b2118;
+  --black: #1d1d1f;
+  --white: #fafafa;
+  --accent: #d64545;
+  --gold: #e0a100;
+  font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+.app {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 1.5rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Board ---------- */
+
+.board {
+  width: 100%;
+  height: auto;
+  background: var(--board);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.12);
+  user-select: none;
+}
+
+.board-lines line {
+  stroke: var(--line);
+  stroke-width: 1.2;
+}
+
+.cell {
+  cursor: default;
+}
+
+.cell .hit {
+  fill: transparent;
+}
+
+.cell.placeable,
+.cell.target,
+.cell.selected {
+  cursor: pointer;
+}
+
+.stone.black {
+  fill: var(--black);
+}
+
+.stone.white {
+  fill: var(--white);
+  stroke: #9a9a9a;
+  stroke-width: 1;
+}
+
+.stone.under {
+  fill: #9b8a70;
+  stroke: #6e5f48;
+  stroke-width: 1;
+}
+
+.stone.floor-3 {
+  stroke: var(--gold);
+  stroke-width: 3;
+}
+
+.floor-label {
+  font-size: 14px;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.floor-label.black {
+  fill: var(--white);
+}
+
+.floor-label.white {
+  fill: var(--black);
+}
+
+.ghost {
+  fill: transparent;
+}
+
+.cell.placeable:hover .ghost {
+  opacity: 0.4;
+}
+
+.cell.ghost-black:hover .ghost {
+  fill: var(--black);
+}
+
+.cell.ghost-white:hover .ghost {
+  fill: var(--white);
+}
+
+.cell.selected .stone:not(.under) {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.target-dot {
+  fill: var(--accent);
+  pointer-events: none;
+}
+
+.cell.last .stone:not(.under) {
+  filter: drop-shadow(0 0 3px var(--accent));
+}
+
+.cell.win .stone:not(.under) {
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+/* ---------- Panel ---------- */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: #fff;
+  font-weight: 600;
+}
+
+.status.over {
+  background: #fff4d6;
+}
+
+.dot {
+  display: inline-block;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #888;
+}
+
+.dot.black {
+  background: var(--black);
+}
+
+.dot.white {
+  background: var(--white);
+}
+
+.reserves {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.reserves > div {
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff;
+  border: 2px solid transparent;
+}
+
+.reserves > div.active {
+  border-color: var(--accent);
+}
+
+.reserves dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.reserves dd {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #c9b896;
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rules {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.rules summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.rules ul {
+  padding-left: 18px;
+}
